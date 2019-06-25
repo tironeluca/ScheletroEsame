@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class Model {
 	
+	// EDITOR
+	String string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._";
+	
 	private EventsDao dao;
 	private Map<Integer,District> dMap;
 	private Graph<District,DefaultWeightedEdge> graph;
