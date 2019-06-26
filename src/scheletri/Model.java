@@ -177,6 +177,7 @@ public class Model {
 
 				List<E> raggiungibili = new ArrayList<E>();
 
+				
 				//CREO ITERATORE E LO ASSOCIO AL GRAFO      
 				//GraphIterator<Fermata, DefaultEdge> it = new BreadthFirstIterator<>(this.grafo,source); //in ampiezza
 				GraphIterator<Country, DefaultEdge> it = new DepthFirstIterator<>(this.grafo,partenza); //in profondita'
@@ -189,6 +190,7 @@ public class Model {
 				return raggiungibili.subList(1, raggiungibili.size());
 			}
 
+			
 			private double calcolaDist(District d1, District d2) {
 				
 				LatLng cord1 = new LatLng(d1.getLat(), d1.getLongi());
