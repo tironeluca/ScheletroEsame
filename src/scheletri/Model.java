@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.javafx.scene.traversal.TraverseListener;
+
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+
 public class Model {
 	
 	// EDITOR
@@ -150,5 +155,34 @@ public class Model {
 	public List<E> getBest() {
 		return best;
 	}
+	
+	//(RAGGIUNGIBILI)
+		//Iterazione con la quale attraversiamo il grafo e ci aggiungiamo via via i vertici che troviamo (N.B. NON E' UN CAMMINO!)
+			public List<Fermata> fermateRaggiungibili(E source){
+
+			public void vertexTraversed(VertexTraversalEvent<E> arg0) {
+
+				return risultato;
+			}
+			
+			
+
+			//OPPURE
+			public List<E> trovaRaggiungibili(Country partenza) {
+
+				List<E> raggiungibili = new ArrayList<E>();
+
+				//CREO ITERATORE E LO ASSOCIO AL GRAFO      
+				//GraphIterator<Fermata, DefaultEdge> it = new BreadthFirstIterator<>(this.grafo,source); //in ampiezza
+				GraphIterator<Country, DefaultEdge> it = new DepthFirstIterator<>(this.grafo,partenza); //in profondita'
+
+				while(it.hasNext()) {
+					raggiungibili.add(it.next());
+				}
+
+				//Pulisco il primo valore della lista che è l'elemento stesso
+				return raggiungibili.subList(1, raggiungibili.size());
+			}
+
 
 }
