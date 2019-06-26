@@ -17,6 +17,7 @@ import javafx.scene.Node;
 public class Model {
 	
 	// EDITOR
+	
 	String string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._";
 	
 	//inserire tipo di dao
