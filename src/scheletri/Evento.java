@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 
 public class Evento implements Comparable<Evento>{
 	
-	public enum Type {
+	public enum Tipo {
 		
 	}
 	
 	private LocalDateTime time;
-	private Type type;
+	private Tipo type;
+	//da aggiungere il resto
 	
 
 	@Override
