@@ -21,6 +21,11 @@ import javafx.scene.Node;
 public class Model {
 	
 	// EDITOR
+	/*Windows/Preferences/Java/Editor/Content Assist
+	Click su Enable Auto Activation
+	Auto Activation delay = 0
+	Auto Activation trigegrs for java = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._
+	*/
 	
 	String string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._";
 	
