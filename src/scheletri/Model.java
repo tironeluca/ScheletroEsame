@@ -9,8 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.javadocmd.simplelatlng.LatLng;
+import com.javadocmd.simplelatlng.LatLngTool;
+import com.javadocmd.simplelatlng.util.LengthUnit;
 import com.sun.javafx.scene.traversal.TraverseListener;
 
+import it.polito.tdp.model.District;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
@@ -185,5 +189,12 @@ public class Model {
 				return raggiungibili.subList(1, raggiungibili.size());
 			}
 
+			private double calcolaDist(District d1, District d2) {
+				
+				LatLng cord1 = new LatLng(d1.getLat(), d1.getLongi());
+				LatLng cord2 = new LatLng(d2.getLat(), d2.getLongi());
+				
+				return LatLngTool.distance(cord1, cord2, LengthUnit.KILOMETER);
+			}
 
 }
