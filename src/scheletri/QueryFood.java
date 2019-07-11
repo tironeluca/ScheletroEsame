@@ -2,6 +2,26 @@ package scheletri;
 
 public class QueryFood {
 	
+	// Tutti i condiment
+	
+	SELECT *
+	FROM condiment
+	
+	
+	
+	// Tutti i food
+	
+	SELECT * 
+	FROM food
+	
+	
+	
+	//Tutte le porzioni
+	
+	SELECT * 
+	FROM portion
+	
+	
 	
 	//Numero di porzioni per ogni cibo
 	
