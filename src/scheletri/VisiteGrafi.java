@@ -24,7 +24,7 @@ public class VisiteGrafi {
 		return inspector.connectedSets().size();
 	}
 
-	//Definisco classe dentro altra classe
+	//Definisco classe dentro altra classe  (UFO SIGHTINGS)
 	//Classe per intercettare gli eventi del grafo quando è scandito da un iteratore (LISTENER)
 	public class EdgeTraversedListener implements TraversalListener<E, DefaultWeightedEdge> {
 
@@ -104,4 +104,142 @@ public class VisiteGrafi {
 
 			return risultato;
 		}
+		
+	// LISTA DI ARCHI CON PESO MASSIMO
+		
+		private List<Adiacenza> trovaMigliori() {
+			
+			int temp = 0;
+
+			List<Adiacenza> result = new LinkedList<Adiacenza>();
+
+			for(DefaultWeightedEdge d: this.graph.edgeSet()) {
+
+				if(graph.getEdgeWeight(d)>temp)
+
+					temp=(int) graph.getEdgeWeight(d);
+
+			}
+
+			for(DefaultWeightedEdge d: this.graph.edgeSet()) {
+
+				if(graph.getEdgeWeight(d)==temp) {
+
+					result.add(new Adiacenza(graph.getEdgeSource(d).getRaceId(), graph.getEdgeTarget(d).getRaceId(),(int)(graph.getEdgeWeight(d))));
+
+					
+
+				}
+
+			}
+
+		return result;
+		}
+		
+		
+		// VERTICE CON PESO MASSIMO (INCOMING E OUTGOING)
+		
+		private String trovaMigliore() {
+			
+			String ris= "Il miglior pilota e' ";
+			int peso=0;
+			Driver best= null;
+			
+			
+			for (Driver d: this.graph.vertexSet())
+			{
+				
+				int temp= calcolaPeso(d);
+				
+				if (temp>peso)
+				{
+					peso=temp;
+					best=d;
+				}
+			}
+			
+			
+			ris+= best.getForename() + " " + best.getSurname()+ " "+ peso;
+			
+			
+			return ris;
+		}
+
+
+
+
+		private int calcolaPeso(Driver d) {
+			
+			Set<DefaultWeightedEdge> incoming= this.graph.incomingEdgesOf(d);
+			Set<DefaultWeightedEdge> outgoing= this.graph.outgoingEdgesOf(d);
+			
+			int inc=0;
+			int out=0;
+			
+			for (DefaultWeightedEdge e: incoming) {
+				
+				inc+= this.graph.getEdgeWeight(e);
+				
+			}
+			
+			for (DefaultWeightedEdge e: outgoing) {
+				
+				out+= this.graph.getEdgeWeight(e);
+				
+			}
+			
+			int peso= out-inc;
+			
+			return peso;
+			
+		}
+		
+		
+	// VERTICI CON SOMMA DEI PESI DEGLI STATI VICINI (NEIGHBOR LIST)
+		
+		private String calcolaVicini() {
+			String ris= "Ogni stato con relativo peso: \n";
+			
+			for(State s: this.graph.vertexSet())
+			{ 	int peso=0;
+				List<State> vicini= Graphs.neighborListOf(this.graph, s);
+				for(State v: vicini)
+				{
+					DefaultWeightedEdge e= graph.getEdge(s, v);
+					int temp= (int) graph.getEdgeWeight(e);
+					peso+= temp;
+					
+				}
+				
+				ris+= s + " "+ peso + "\n";
+			}
+			
+			return ris;
+		}
+		
+	
+	// DIMENSIONE COMPONENTE CONNESSA
+		
+		
+public int componenteConnessa(Integer cod) {
+			
+			ArtObject a= idMap.get(cod);
+			
+			Set<ArtObject> visitati = new HashSet<>(); 
+			DepthFirstIterator<ArtObject, DefaultWeightedEdge> dfv = new DepthFirstIterator<>(this.graph, a); 
+			while (dfv.hasNext()) 
+			{visitati.add(dfv.next());}
+			
+			return visitati.size();
+// SE SERVE NUMERO DI ELEMENTI CONNESSI AGGIUNGI -1 AL SIZE PER TOGLIERE ELEMENTO STESSO
+			
+		}
+
+
+
+
+
+
+		
+		
 }

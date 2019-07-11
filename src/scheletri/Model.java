@@ -63,7 +63,7 @@ public class Model {
 		graph = new SimpleWeightedGraph<E,DefaultEdge>(/*DefaultEdge.class*/);
 		
 		//scelta tipo valori lista
-		vertex = new ArrayList<E>(dao.getVertex(/*parametri*/));
+		vertex = new ArrayList<E>(dao.getVertex(/*parametri*/, /*idMap*/));
 		Graphs.addAllVertices(graph,vertex);
 		
 		edges = new ArrayList<Adiacenza>(dao.getEdges(/*parametri*/));
@@ -79,8 +79,8 @@ public class Model {
 			
 		}
 		
-		System.out.println("#vertici: "graph.vertexSet().size());
-		System.out.println("#archi: "graph.edgeSet().size());
+		System.out.println("#vertici: "+graph.vertexSet().size());
+		System.out.println("#archi: "+graph.edgeSet().size());
 		
 	}
 	
