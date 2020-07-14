@@ -30,7 +30,7 @@ public class Model {
 	String string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._";
 	
 	//inserire tipo di dao
-	private EventsDao dao;
+	private PremierLeagueDAO dao;
 	
 	//scelta valore mappa
 	private Map<Integer,E> idMap;
@@ -52,7 +52,7 @@ public class Model {
 	public Model() {
 		
 		//inserire tipo dao
-		dao  = new EventsDao();
+		dao  = new PremierLeagueDAO();
 		//inserire tipo values
 		idMap = new HashMap<Integer,E>();
 	}

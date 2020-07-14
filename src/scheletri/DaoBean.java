@@ -6,149 +6,121 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import it.polito.tdp.PremierLeague.model.Action;
+import it.polito.tdp.PremierLeague.model.Match;
+import it.polito.tdp.PremierLeague.model.Player;
 import it.polito.tdp.food.db.Condiment;
 import it.polito.tdp.food.db.DBConnect;
 import it.polito.tdp.food.db.Food;
 
 public class DaoBean {
 	
-	public List<Food> listAllFood(){
-		String sql = "SELECT * FROM food" ;
+	public List<Player> listAllPlayers(){
+		String sql = "SELECT * FROM Players";
+		List<Player> result = new ArrayList<Player>();
+		Connection conn = DBConnect.getConnection();
+
 		try {
-			Connection conn = DBConnect.getConnection() ;
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
 
-			PreparedStatement st = conn.prepareStatement(sql) ;
-			
-			List<Food> list = new ArrayList<>() ;
-			
-			ResultSet res = st.executeQuery() ;
-			
-			while(res.next()) {
-				try {
-					list.add(new Food(res.getInt("food_code"),
-							res.getString("display_name")));
-				} catch (Throwable t) {
-					t.printStackTrace();
-				}
+				Player player = new Player(res.getInt("PlayerID"), res.getString("Name")); 
+				
+				result.add(player);
 			}
-			
 			conn.close();
-			return list ;
-
+			return result;
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null ;
+			return null;
 		}
-
 	}
 	
-	public List<Condiment> listAllCondiment(){
-		String sql = "SELECT * FROM condiment" ;
+	public List<Action> listAllActions(){
+		String sql = "SELECT * FROM Actions";
+		List<Action> result = new ArrayList<Action>();
+		Connection conn = DBConnect.getConnection();
+
 		try {
-			Connection conn = DBConnect.getConnection() ;
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
 
-			PreparedStatement st = conn.prepareStatement(sql) ;
-			
-			List<Condiment> list = new ArrayList<>() ;
-			
-			ResultSet res = st.executeQuery() ;
-			
-			while(res.next()) {
-				try {
-					list.add(new Condiment(res.getInt("condiment_code"),
-							res.getString("display_name"), 
-							res.getString("condiment_portion_size"), 
-							res.getInt("condiment_portion_code"),
-							res.getDouble("condiment_grains"),
-							res.getDouble("condiment_whole_grains"),
-							res.getDouble("condiment_vegetables"),
-							res.getDouble("condiment_dkgreen"),
-							res.getDouble("condiment_orange"),
-							res.getDouble("condiment_starchy_vegetables"),
-							res.getDouble("condiment_other_vegetables"),
-							res.getDouble("condiment_fruits"),
-							res.getDouble("condiment_milk"),
-							res.getDouble("condiment_meat"),
-							res.getDouble("condiment_soy"),
-							res.getDouble("condiment_drybeans_peas"),
-							res.getDouble("condiment_oils"),
-							res.getDouble("condiment_solid_fats"),
-							res.getDouble("condiment_added_sugars"),
-							res.getDouble("condiment_alcohol"),
-							res.getDouble("condiment_calories"),							
-							res.getDouble("condiment_saturated_fats")));
-				} catch (Throwable t) {
-					t.printStackTrace();
-				}
+				Action action = new Action(res.getInt("PlayerID"),res.getInt("MatchID"),res.getInt("TeamID"),res.getInt("Starts"),res.getInt("Goals"),
+						res.getInt("TimePlayed"),res.getInt("RedCards"),res.getInt("YellowCards"),res.getInt("TotalSuccessfulPassesAll"),res.getInt("totalUnsuccessfulPassesAll"),
+						res.getInt("Assists"),res.getInt("TotalFoulsConceded"),res.getInt("Offsides"));
+				
+				result.add(action);
 			}
-			
 			conn.close();
-			return list ;
-
+			return result;
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null ;
+			return null;
 		}
-
 	}
 	
-	
-	public List<Portion> listAllPortion(){
-		String sql = "SELECT * FROM portion " ;
+	public List<Match> listAllMatches(){
+		String sql = "SELECT m.MatchID, m.TeamHomeID, m.TeamAwayID, m.teamHomeFormation, m.teamAwayFormation, m.resultOfTeamHome, m.date, t1.Name, t2.Name   "
+				+ "FROM Matches m, Teams t1, Teams t2 "
+				+ "WHERE m.TeamHomeID = t1.TeamID AND m.TeamAwayID = t2.TeamID";
+		List<Match> result = new ArrayList<Match>();
+		Connection conn = DBConnect.getConnection();
+
 		try {
-			Connection conn = DBConnect.getConnection() ;
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
 
-			PreparedStatement st = conn.prepareStatement(sql) ;
-			
-			List<Portion> list = new ArrayList<>() ;
-			
-			ResultSet res = st.executeQuery() ;
-			
-			while(res.next()) {
-				try {
-					list.add(new Portion (res.getInt("portion_id"),
-							res.getInt("food_code"),
-							res.getInt("portion_default"),
-							res.getDouble("portion_amount"),
-							res.getString("portion_display_name"), 
-							res.getDouble("factor"),
-							res.getDouble("increment"),
-							res.getDouble("multiplier"),
-							res.getDouble("grains"),
-							res.getDouble("whole_grains"),
-							res.getDouble("vegetables"),
-							res.getDouble("orange_vegetables"),
-							res.getDouble("drkgreen_vegetables"),
-							res.getDouble("starchy_vegetables"),
-							res.getDouble("other_vegetables"),
-							res.getDouble("fruits"),
-							res.getDouble("milk"),
-							res.getDouble("meats"),
-							res.getDouble("soy"),
-							res.getDouble("drybeans_peas"),
-							res.getDouble("oils"),
-							res.getDouble("solid_fats"),							
-							res.getDouble("added_sugars"),
-							res.getDouble("alcohol"),
-							res.getDouble("calories"),
-							res.getDouble("saturated_fats")));
-				} catch (Throwable t) {
-					t.printStackTrace();
-				}
+				
+				Match match = new Match(res.getInt("m.MatchID"), res.getInt("m.TeamHomeID"), res.getInt("m.TeamAwayID"), res.getInt("m.teamHomeFormation"), 
+							res.getInt("m.teamAwayFormation"),res.getInt("m.resultOfTeamHome"), res.getTimestamp("m.date").toLocalDateTime(), res.getString("t1.Name"),res.getString("t2.Name"));
+				
+				
+				result.add(match);
+				
+
 			}
-			
 			conn.close();
-			return list ;
-
+			return result;
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null ;
+			return null;
 		}
+	}
+	
+	public List<Team> listAllTeams(){
+		String sql = "SELECT t.TeamID, t.Name " + 
+				"FROM teams t ";
+		List<Team> result = new ArrayList<Team>();
+		Connection conn = DBConnect.getConnection();
 
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
+
+				
+				Team team= newTeam(res.getInt("t.TeamID"), res.getString("t.Name"));
+				
+				
+				result.add(team);
+				
+
+			}
+			conn.close();
+			return result;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 
