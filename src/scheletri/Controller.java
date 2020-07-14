@@ -39,5 +39,35 @@ public class Controller {
 		return this.graph.containsVertex(idMap.get(cod));
 	}
 	
-// 
+	
+	
+// CONTROLLO TEXTFIELD E CONTROLLO COMBOBOX
+	
+	txtResult.clear();
+	String ris= txtMinuti.getText();
+	
+	if(ris.equals(null))
+	{
+		txtResult.appendText("ERRORE: inserire valore\n");
+		return;
+	}
+	
+	Integer minuti;
+	try {
+	minuti = Integer.parseInt(ris);}catch(NumberFormatException n) {txtResult.appendText("ERRORE: il formato è errato\n");
+	return;}
+	
+	if( minuti<1 || minuti>90)
+	{
+		txtResult.appendText("ERRORE: il minutaggio inserito è troppo piccolo o troppo elevato\n");
+		return;
+	}
+	
+	Integer mese= cmbMese.getValue();
+	
+	if ( mese == null)
+	{
+		txtResult.appendText("ERRORE: scegliere un valore dalla lista\n");
+		return;
+	}
 }

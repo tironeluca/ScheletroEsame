@@ -15,7 +15,7 @@ public class DAO {
 			Connection conn = DBConnect.getConnection() ;
 
 			PreparedStatement st = conn.prepareStatement(sql) ;
-			
+			// st.setString(1, ris); 
 			ResultSet res = st.executeQuery() ;
 			
 			while( res.next() ) {
